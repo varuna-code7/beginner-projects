@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0px;
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color:whitesmoke;
+        }
+        .main{
+            width: 35%;
+            height: 500px;
+            background-color:aqua;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            font-size: xx-large;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 20px;
+            margin-top: 100px;
+            
+        }
+        h1{
+            margin: 0px;
+        }
+        .main input{
+            width: 160px;
+            height: 33px;
+            border-radius: 20px;
+        }
+        #r{
+            width: 50px;
+            height: 30px;
+        }
+        .main button{
+            width: 50px;
+            height: 30px;
+
+        }
+        .main td{
+            padding-bottom: 30px;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <h1>login form</h1>
+        <br>
+        <form>
+            <table>
+                <tr>
+                    <td><label for="nu"><b>Name</b></label></td>
+                    <td><input type="text" id="na" placeholder="Enter name"></td>
+                </tr>
+                 <tr>
+                    <td><label for="nu"><b>Number</b></label></td>
+                    <td><input type="number" id="nu" placeholder="Enter Number"></td>
+                 </tr>
+                 <tr>
+                    <td><label for="ne"><b>Email</b></label></td>
+                    <td><input type="email" id="ne" placeholder="Enter Email"></td>
+                 </tr>
+                 <tr>
+                    <td><b>confirm</b></td>
+                    <td><input type="radio" name="n" id="r">yes <input type="radio" name="n" id="r">no</td>
+                 </tr>
+                 <tr>
+                    <td><a href="" target="blank"><b>submit</b></td>
+
+
+                 </tr>
+            </table>
+        </form>
+    </div>
+    
+</body>
+</html>
