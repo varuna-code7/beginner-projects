@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Auth System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px #aaa;
+      text-align: center;
+      width: 300px;
+    }
+
+    input {
+      display: block;
+      margin: 10px auto;
+      padding: 10px;
+      width: 90%;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .link {
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="container">
+    <!-- Content will be injected by JS -->
+  </div>
+
+  <script>
+    const container = document.getElementById('container');
+
+    function showRegister() {
+      container.innerHTML = `
+        <h2>Register</h2>
+        <form id="registerForm">
+          <input type="text" id="username" placeholder="Username" required>
+          <input type="email" id="email" placeholder="Email" required>
+          <input type="password" id="password" placeholder="Password" required>
+          <button type="submit">Register</button>
+        </form>
+        <p class="link">Already have an account? <a href="#" id="loginLink">Login here</a></p>
+      `;
+
+      document.getElementById('registerForm').addEventListener('submit', function(e){
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        if(users.some(u => u.email === email)){
+          alert('Email already registered!');
+          return;
+        }
+
+        users.push({username, email, password});
+        localStorage.setItem('users', JSON.stringify(users));
+        alert('Registration successful!');
+        showLogin();
+      });
+
+      document.getElementById('loginLink').addEventListener('click', showLogin);
+    }
+
+    function showLogin() {
+      container.innerHTML = `
+        <h2>Login</h2>
+        <form id="loginForm">
+          <input type="email" id="loginEmail" placeholder="Email" required>
+          <input type="password" id="loginPassword" placeholder="Password" required>
+          <button type="submit">Login</button>
+        </form>
+        <p class="link">Don't have an account? <a href="#" id="registerLink">Register here</a></p>
+      `;
+
+      document.getElementById('loginForm').addEventListener('submit', function(e){
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        const user = users.find(u => u.email === email && u.password === password);
+
+        if(user){
+          localStorage.setItem('loggedInUser', JSON.stringify(user));
+          showDashboard();
+        } else {
+          alert('Invalid email or password');
+        }
+      });
+
+      document.getElementById('registerLink').addEventListener('click', showRegister);
+    }
+
+    function showDashboard() {
+      const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+      if(!loggedInUser){
+        showLogin();
+        return;
+      }
+
+      container.innerHTML = `
+        <h2>Welcome, ${loggedInUser.username}!</h2>
+        <button id="logoutBtn">Logout</button>
+      `;
+
+      document.getElementById('logoutBtn').addEventListener('click', function(){
+        localStorage.removeItem('loggedInUser');
+        showLogin();
+      });
+    }
+
+    // Initialize
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+    if(loggedInUser){
+      showDashboard();
+    } else {
+      showLogin();
+    }
+  </script>
+</body>
+</html>
